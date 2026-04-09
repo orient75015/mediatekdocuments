@@ -8,7 +8,6 @@ using System.Drawing;
 using System.IO;
 
 namespace MediaTekDocuments.view
-
 {
     /// <summary>
     /// Classe d'affichage
@@ -117,7 +116,7 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// Recherche et affichage des livres dont le titre matche acec la saisie.
+        /// Recherche et affichage des livres dont le titre matche avec la saisie.
         /// Cette procédure est exécutée à chaque ajout ou suppression de caractère
         /// dans le textBox de saisie.
         /// </summary>
@@ -137,7 +136,6 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                // si la zone de saisie est vide et aucun élément combo sélectionné, réaffichage de la liste complète
                 if (cbxLivresGenres.SelectedIndex < 0 && cbxLivresPublics.SelectedIndex < 0 && cbxLivresRayons.SelectedIndex < 0
                     && txbLivresNumRecherche.Text.Equals(""))
                 {
@@ -432,7 +430,7 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// Recherche et affichage des Dvd dont le titre matche acec la saisie.
+        /// Recherche et affichage des Dvd dont le titre matche avec la saisie.
         /// Cette procédure est exécutée à chaque ajout ou suppression de caractère
         /// dans le textBox de saisie.
         /// </summary>
@@ -452,7 +450,6 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                // si la zone de saisie est vide et aucun élément combo sélectionné, réaffichage de la liste complète
                 if (cbxDvdGenres.SelectedIndex < 0 && cbxDvdPublics.SelectedIndex < 0 && cbxDvdRayons.SelectedIndex < 0
                     && txbDvdNumRecherche.Text.Equals(""))
                 {
@@ -746,7 +743,7 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// Recherche et affichage des revues dont le titre matche acec la saisie.
+        /// Recherche et affichage des revues dont le titre matche avec la saisie.
         /// Cette procédure est exécutée à chaque ajout ou suppression de caractère
         /// dans le textBox de saisie.
         /// </summary>
@@ -766,7 +763,6 @@ namespace MediaTekDocuments.view
             }
             else
             {
-                // si la zone de saisie est vide et aucun élément combo sélectionné, réaffichage de la liste complète
                 if (cbxRevuesGenres.SelectedIndex < 0 && cbxRevuesPublics.SelectedIndex < 0 && cbxRevuesRayons.SelectedIndex < 0
                     && txbRevuesNumRecherche.Text.Equals(""))
                 {
@@ -776,7 +772,7 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// Affichage des informations de la revue sélectionné
+        /// Affichage des informations de la revue sélectionnée
         /// </summary>
         /// <param name="revue">la revue</param>
         private void AfficheRevuesInfos(Revue revue)
@@ -801,7 +797,7 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// Vide les zones d'affichage des informations de la reuve
+        /// Vide les zones d'affichage des informations de la revue
         /// </summary>
         private void VideRevuesInfos()
         {
@@ -989,13 +985,13 @@ namespace MediaTekDocuments.view
         }
         #endregion
 
-        #region Onglet Paarutions
+        #region Onglet Parutions
         private readonly BindingSource bdgExemplairesListe = new BindingSource();
         private List<Exemplaire> lesExemplaires = new List<Exemplaire>();
         const string ETATNEUF = "00001";
 
         /// <summary>
-        /// Ouverture de l'onglet : récupère le revues et vide tous les champs.
+        /// Ouverture de l'onglet : récupère les revues et vide tous les champs.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1050,7 +1046,7 @@ namespace MediaTekDocuments.view
 
         /// <summary>
         /// Si le numéro de revue est modifié, la zone de l'exemplaire est vidée et inactive
-        /// les informations de la revue son aussi effacées
+        /// les informations de la revue sont aussi effacées
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1074,7 +1070,6 @@ namespace MediaTekDocuments.view
         /// <param name="revue">la revue</param>
         private void AfficheReceptionRevueInfos(Revue revue)
         {
-            // informations sur la revue
             txbReceptionRevuePeriodicite.Text = revue.Periodicite;
             txbReceptionRevueImage.Text = revue.Image;
             txbReceptionRevueDelaiMiseADispo.Text = revue.DelaiMiseADispo.ToString();
@@ -1092,7 +1087,6 @@ namespace MediaTekDocuments.view
             {
                 pcbReceptionRevueImage.Image = null;
             }
-            // affiche la liste des exemplaires de la revue
             AfficheReceptionExemplairesRevue();
         }
 
@@ -1131,7 +1125,6 @@ namespace MediaTekDocuments.view
             string filePath = "";
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
-                // positionnement à la racine du disque où se trouve le dossier actuel
                 InitialDirectory = Path.GetPathRoot(Environment.CurrentDirectory),
                 Filter = "Files|*.jpg;*.bmp;*.jpeg;*.png;*.gif"
             };
@@ -1214,7 +1207,7 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// affichage de l'image de l'exemplaire suite à la sélection d'un exemplaire dans la liste
+        /// Affichage de l'image de l'exemplaire suite à la sélection d'un exemplaire dans la liste
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1236,6 +1229,191 @@ namespace MediaTekDocuments.view
             else
             {
                 pcbReceptionExemplaireRevueImage.Image = null;
+            }
+        }
+        #endregion
+
+        #region Onglet Commandes Livres/DVD
+        private readonly BindingSource bdgCommandesLivreDvdListe = new BindingSource();
+        private readonly BindingSource bdgSuivis = new BindingSource();
+        private List<CommandeDocument> lesCommandesLivreDvd = new List<CommandeDocument>();
+
+        /// <summary>
+        /// Ouverture de l'onglet Commandes livres/DVD
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tabCommandesLivreDvd_Enter(object sender, EventArgs e)
+        {
+            lesCommandesLivreDvd = new List<CommandeDocument>();
+            bdgCommandesLivreDvdListe.DataSource = lesCommandesLivreDvd;
+            cbxCommandesLivreDvdSuivi.DataSource = controller.GetAllSuivis();
+        }
+
+        /// <summary>
+        /// Recherche des commandes d'un livre ou DVD
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCommandesLivreDvdRechercher_Click(object sender, EventArgs e)
+        {
+            if (!txbCommandesLivreDvdNumero.Text.Equals(""))
+            {
+                lesCommandesLivreDvd = controller.GetCommandesDocument(txbCommandesLivreDvdNumero.Text);
+                RemplirCommandesLivreDvdListe(lesCommandesLivreDvd);
+            }
+            else
+            {
+                MessageBox.Show("Veuillez saisir un numéro de livre/DVD", "Information");
+            }
+        }
+
+        /// <summary>
+        /// Remplit le datagrid avec la liste des commandes reçue en paramètre
+        /// </summary>
+        /// <param name="commandes">liste de commandes</param>
+        private void RemplirCommandesLivreDvdListe(List<CommandeDocument> commandes)
+        {
+            bdgCommandesLivreDvdListe.DataSource = commandes;
+            dgvCommandesLivreDvdListe.DataSource = bdgCommandesLivreDvdListe;
+            if (dgvCommandesLivreDvdListe.Columns.Count > 0)
+            {
+                dgvCommandesLivreDvdListe.Columns["idLivreDvd"].Visible = false;
+                dgvCommandesLivreDvdListe.Columns["idSuivi"].Visible = false;
+                dgvCommandesLivreDvdListe.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            }
+        }
+
+        /// <summary>
+        /// Affichage des informations de la commande sélectionnée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvCommandesLivreDvdListe_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvCommandesLivreDvdListe.CurrentCell != null)
+            {
+                try
+                {
+                    CommandeDocument commande = (CommandeDocument)bdgCommandesLivreDvdListe.List[bdgCommandesLivreDvdListe.Position];
+                    dtpCommandesLivreDvdDate.Value = commande.DateCommande;
+                    txbCommandesLivreDvdMontant.Text = commande.Montant.ToString();
+                    txbCommandesLivreDvdNbExemplaires.Text = commande.NbExemplaire.ToString();
+                    cbxCommandesLivreDvdSuivi.SelectedItem = controller.GetAllSuivis().Find(s => s.Id.Equals(commande.IdSuivi));
+                }
+                catch
+                {
+                    dtpCommandesLivreDvdDate.Value = DateTime.Now;
+                    txbCommandesLivreDvdMontant.Text = "";
+                    txbCommandesLivreDvdNbExemplaires.Text = "";
+                }
+            }
+        }
+
+        /// <summary>
+        /// Ajout d'une nouvelle commande de livre ou DVD
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCommandesLivreDvdAjouter_Click(object sender, EventArgs e)
+        {
+            if (txbCommandesLivreDvdNumero.Text.Equals(""))
+            {
+                MessageBox.Show("Veuillez saisir un numéro de livre/DVD", "Information");
+                return;
+            }
+            if (txbCommandesLivreDvdMontant.Text.Equals("") || txbCommandesLivreDvdNbExemplaires.Text.Equals(""))
+            {
+                MessageBox.Show("Veuillez remplir tous les champs", "Information");
+                return;
+            }
+            try
+            {
+                string id = DateTime.Now.ToString("yyyyMMddHHmmss");
+                DateTime dateCommande = dtpCommandesLivreDvdDate.Value;
+                double montant = double.Parse(txbCommandesLivreDvdMontant.Text);
+                int nbExemplaire = int.Parse(txbCommandesLivreDvdNbExemplaires.Text);
+                string idLivreDvd = txbCommandesLivreDvdNumero.Text;
+                string idSuivi = "00001";
+                CommandeDocument commande = new CommandeDocument(id, dateCommande, montant, nbExemplaire, idLivreDvd, idSuivi, "en cours");
+                if (controller.CreerCommandeDocument(commande))
+                {
+                    lesCommandesLivreDvd = controller.GetCommandesDocument(idLivreDvd);
+                    RemplirCommandesLivreDvdListe(lesCommandesLivreDvd);
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de l'ajout de la commande", "Erreur");
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Veuillez vérifier les valeurs saisies", "Information");
+            }
+        }
+
+        /// <summary>
+        /// Suppression d'une commande de livre ou DVD
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCommandesLivreDvdSupprimer_Click(object sender, EventArgs e)
+        {
+            if (dgvCommandesLivreDvdListe.CurrentCell != null)
+            {
+                CommandeDocument commande = (CommandeDocument)bdgCommandesLivreDvdListe.List[bdgCommandesLivreDvdListe.Position];
+                if (commande.IdSuivi.Equals("00003") || commande.IdSuivi.Equals("00004"))
+                {
+                    MessageBox.Show("Impossible de supprimer une commande livrée ou réglée", "Information");
+                    return;
+                }
+                if (MessageBox.Show("Confirmer la suppression ?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    if (controller.SupprimerCommandeDocument(commande.Id))
+                    {
+                        lesCommandesLivreDvd = controller.GetCommandesDocument(txbCommandesLivreDvdNumero.Text);
+                        RemplirCommandesLivreDvdListe(lesCommandesLivreDvd);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erreur lors de la suppression", "Erreur");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Modification du suivi d'une commande de livre ou DVD
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCommandesLivreDvdModifierSuivi_Click(object sender, EventArgs e)
+        {
+            if (dgvCommandesLivreDvdListe.CurrentCell != null && cbxCommandesLivreDvdSuivi.SelectedItem != null)
+            {
+                CommandeDocument commande = (CommandeDocument)bdgCommandesLivreDvdListe.List[bdgCommandesLivreDvdListe.Position];
+                Suivi nouveauSuivi = (Suivi)cbxCommandesLivreDvdSuivi.SelectedItem;
+                if ((commande.IdSuivi.Equals("00003") || commande.IdSuivi.Equals("00004"))
+                    && (nouveauSuivi.Id.Equals("00001") || nouveauSuivi.Id.Equals("00002")))
+                {
+                    MessageBox.Show("Une commande livrée ou réglée ne peut pas revenir à une étape précédente", "Information");
+                    return;
+                }
+                if (nouveauSuivi.Id.Equals("00004") && !commande.IdSuivi.Equals("00003"))
+                {
+                    MessageBox.Show("Une commande ne peut être réglée que si elle est livrée", "Information");
+                    return;
+                }
+                commande.IdSuivi = nouveauSuivi.Id;
+                if (controller.ModifierSuiviCommande(commande))
+                {
+                    lesCommandesLivreDvd = controller.GetCommandesDocument(txbCommandesLivreDvdNumero.Text);
+                    RemplirCommandesLivreDvdListe(lesCommandesLivreDvd);
+                }
+                else
+                {
+                    MessageBox.Show("Erreur lors de la modification", "Erreur");
+                }
             }
         }
         #endregion
