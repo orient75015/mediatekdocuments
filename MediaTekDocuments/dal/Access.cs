@@ -215,5 +215,61 @@ namespace MediaTekDocuments.dal
                 serializer.Serialize(writer, value);
             }
         }
+
+        /// <summary>
+        /// Retourne les commandes d'une revue (abonnements)
+        /// </summary>
+        public List<CommandeRevue> GetCommandesRevue(string idRevue)
+        {
+            String jsonId = convertToJson("id", idRevue);
+            List<CommandeRevue> lesCommandes = TraitementRecup<CommandeRevue>(GET, "abonnement/" + jsonId, null);
+            return lesCommandes;
+        }
+
+        /// <summary>
+        /// Crée une commande de revue (abonnement)
+        /// </summary>
+        public bool CreerCommandeRevue(CommandeRevue commande)
+        {
+            String jsonCommande = JsonConvert.SerializeObject(commande, new CustomDateTimeConverter());
+            try
+            {
+                List<CommandeRevue> liste = TraitementRecup<CommandeRevue>(POST, "abonnement", "champs=" + jsonCommande);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Supprime une commande de revue
+        /// </summary>
+        public bool SupprimerCommandeRevue(string id)
+        {
+            String jsonId = convertToJson("id", id);
+            try
+            {
+                List<CommandeRevue> liste = TraitementRecup<CommandeRevue>(DELETE, "abonnement/" + jsonId, null);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Retourne les revues dont l'abonnement se termine dans moins de 30 jours
+        /// </summary>
+        public List<CommandeRevue> GetAbonnementsExpiresBientot()
+        {
+            List<CommandeRevue> lesAbonnements = TraitementRecup<CommandeRevue>(GET, "abonnement/expiresbientot", null);
+            return lesAbonnements;
+        }
+
     }
 }

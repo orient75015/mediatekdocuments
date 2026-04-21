@@ -77,5 +77,28 @@ namespace MediaTekDocuments.controller
         {
             return access.SupprimerCommandeDocument(id);
         }
+    
+
+    public List<CommandeRevue> GetCommandesRevue(string idRevue)
+        {
+            return access.GetCommandesRevue(idRevue);
+        }
+
+        public bool CreerCommandeRevue(CommandeRevue commande)
+        {
+            return access.CreerCommandeRevue(commande);
+        }
+
+        public bool SupprimerCommandeRevue(string id)
+        {
+            return access.SupprimerCommandeRevue(id);
+        }
+
+        public List<CommandeRevue> GetAbonnementsExpiresBientot()
+        {
+            return access.GetAbonnementsExpiresBientot();
+        }
+
     }
+
 }
