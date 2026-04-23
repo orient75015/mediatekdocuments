@@ -23,15 +23,33 @@ namespace MediaTekDocuments.view
         /// <summary>
         /// Constructeur : création du contrôleur lié à ce formulaire
         /// </summary>
-        internal FrmMediatek()
+        internal FrmMediatek(Utilisateur utilisateur)
         {
             InitializeComponent();
             this.controller = new FrmMediatekController();
-            List<CommandeRevue> abonnements = controller.GetAbonnementsExpiresBientot();
-            if (abonnements.Count > 0)
+            AppliquerDroits(utilisateur);
+        }
+
+        private void AppliquerDroits(Utilisateur utilisateur)
+        {
+            switch (utilisateur.IdService)
             {
-                FrmAlerteAbonnements frm = new FrmAlerteAbonnements(abonnements);
-                frm.ShowDialog();
+                case "00001": // Administratif
+                    List<CommandeRevue> abonnements = controller.GetAbonnementsExpiresBientot();
+                    if (abonnements.Count > 0)
+                    {
+                        FrmAlerteAbonnements frm = new FrmAlerteAbonnements(abonnements);
+                        frm.ShowDialog();
+                    }
+                    break;
+                case "00002": // Prêts
+                    tabCommandesLivreDvd.Enabled = false;
+                    tabCommandesRevues.Enabled = false;
+                    break;
+                case "00003": // Culture
+                    MessageBox.Show("Vos droits ne sont pas suffisants pour accéder à cette application.", "Accès refusé");
+                    Environment.Exit(0);
+                    break;
             }
         }
         /// <summary>

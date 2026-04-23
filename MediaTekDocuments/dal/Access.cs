@@ -271,5 +271,23 @@ namespace MediaTekDocuments.dal
             return lesAbonnements;
         }
 
+        /// <summary>
+        /// Retourne l'utilisateur correspondant au login/pwd ou null si introuvable
+        /// </summary>
+        public Utilisateur GetUtilisateur(string login, string pwd)
+        {
+            String jsonChamps = convertToJson("login", login);
+            List<Utilisateur> lesUtilisateurs = TraitementRecup<Utilisateur>(GET, "utilisateur/" + jsonChamps, null);
+            if (lesUtilisateurs != null && lesUtilisateurs.Count > 0)
+            {
+                Utilisateur utilisateur = lesUtilisateurs[0];
+                if (utilisateur.Pwd.Equals(pwd))
+                {
+                    return utilisateur;
+                }
+            }
+            return null;
+        }
+
     }
 }
