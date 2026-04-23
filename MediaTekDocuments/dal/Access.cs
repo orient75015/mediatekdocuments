@@ -25,7 +25,7 @@ namespace MediaTekDocuments.dal
             String authenticationString;
             try
             {
-                authenticationString = "admin:adminpwd";
+                authenticationString = System.Configuration.ConfigurationManager.AppSettings["apiCredentials"];
                 api = ApiRest.GetInstance(uriApi, authenticationString);
             }
             catch (Exception e)
