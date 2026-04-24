@@ -69,6 +69,7 @@
     <Compile Include="model\CommandeDocument.cs" />
     <Compile Include="manager\ApiRest.cs" />
     <Compile Include="dal\Access.cs" />
+    <Compile Include="model\Service.cs" />
     <Compile Include="model\Suivi.cs" />
     <Compile Include="model\Utilisateur.cs" />
     <Compile Include="view\FrmAlerteAbonnements.cs">
