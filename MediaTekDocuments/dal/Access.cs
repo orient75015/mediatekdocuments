@@ -7,6 +7,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System.Configuration;
 using System.Linq;
+using NLog;
 
 namespace MediaTekDocuments.dal
 {
@@ -20,6 +21,7 @@ namespace MediaTekDocuments.dal
         private const string PUT = "PUT";
         private const string DELETE = "DELETE";
         private const string CHAMPS = "champs=";
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         private Access()
         {
@@ -31,7 +33,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                logger.Error(e, e.Message);
                 Environment.Exit(0);
             }
         }
@@ -98,7 +100,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                logger.Error(ex, ex.Message);
             }
             return false;
         }
@@ -126,7 +128,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                logger.Error(ex, ex.Message);
             }
             return false;
         }
@@ -141,7 +143,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                logger.Error(ex, ex.Message);
             }
             return false;
         }
@@ -156,7 +158,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                logger.Error(ex, ex.Message);
             }
             return false;
         }
@@ -178,12 +180,12 @@ namespace MediaTekDocuments.dal
                 }
                 else
                 {
-                    Console.WriteLine("code erreur = " + code + " message = " + (String)retour["message"]);
+                    logger.Warn("code erreur = " + code + " message = " + (String)retour["message"]);
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Erreur lors de l'accès à l'API : " + e.Message);
+                logger.Error(e, "Erreur lors de l'accès à l'API : " + e.Message);
                 Environment.Exit(0);
             }
             return liste;
@@ -240,7 +242,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                logger.Error(ex, ex.Message);
             }
             return false;
         }
@@ -258,7 +260,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                logger.Error(ex, ex.Message);
             }
             return false;
         }
