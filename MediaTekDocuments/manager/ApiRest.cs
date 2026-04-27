@@ -7,7 +7,7 @@ namespace MediaTekDocuments.manager
     /// <summary>
     /// Classe indépendante d'accès à une api rest avec éventuellement une "basic authorization"
     /// </summary>
-    class ApiRest
+    public class ApiRest
     {
         /// <summary>
         /// unique instance de la classe
@@ -27,10 +27,9 @@ namespace MediaTekDocuments.manager
         /// </summary>
         /// <param name="uriApi">adresse de l'api</param>
         /// <param name="authenticationString">chaîne d'authentification</param>
-        private ApiRest(String uriApi, String authenticationString="")
+        private ApiRest(String uriApi, String authenticationString = "")
         {
             httpClient = new HttpClient() { BaseAddress = new Uri(uriApi) };
-            // prise en compte dans l'url de l'authentificaiton (basic authorization), si elle n'est pas vide
             if (!String.IsNullOrEmpty(authenticationString))
             {
                 String base64EncodedAuthenticationString = Convert.ToBase64String(System.Text.ASCIIEncoding.ASCII.GetBytes(authenticationString));
@@ -46,7 +45,7 @@ namespace MediaTekDocuments.manager
         /// <returns></returns>
         public static ApiRest GetInstance(String uriApi, String authenticationString)
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = new ApiRest(uriApi, authenticationString);
             }
@@ -62,13 +61,11 @@ namespace MediaTekDocuments.manager
         /// <returns>liste d'objets (select) ou liste vide (ok) ou null si erreur</returns>
         public JObject RecupDistant(string methode, string message, String parametres)
         {
-            // transformation des paramètres pour les mettre dans le body
             StringContent content = null;
-            if(!(parametres is null))
+            if (!(parametres is null))
             {
                 content = new StringContent(parametres, System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
             }
-            // envoi du message et attente de la réponse
             switch (methode)
             {
                 case "GET":
@@ -83,14 +80,11 @@ namespace MediaTekDocuments.manager
                 case "DELETE":
                     httpResponse = httpClient.DeleteAsync(message).Result;
                     break;
-                // methode incorrecte
                 default:
                     return new JObject();
             }
-            // récupération de l'information retournée par l'api
-            var json = httpResponse.Content.ReadAsStringAsync().Result; 
+            var json = httpResponse.Content.ReadAsStringAsync().Result;
             return JObject.Parse(json);
         }
-
     }
 }
